@@ -2,7 +2,10 @@ package com.epam.pageObjects.gmail;
 
 import com.epam.pageObjects.BasePage;
 import com.epam.utils.Wait;
+import com.epam.utils.providers.DriverProvider;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 public class LoginPage extends BasePage {
@@ -29,12 +32,14 @@ public class LoginPage extends BasePage {
 
     public void enterEmail(String email) {
         waitOnElementToBeClickable(emailInput);
-        emailInput.sendKeys(email + "\n");
+        emailInput.sendKeys(email);
+        DriverProvider.getInstance().pressKey(new KeyEvent(AndroidKey.ENTER));
     }
 
     public void enterPassword(String password) {
         waitOnElementToBeClickable(passwordInput);
-        passwordInput.sendKeys(password + "\n");
+        passwordInput.sendKeys(password);
+        DriverProvider.getInstance().pressKey(new KeyEvent(AndroidKey.ENTER));
     }
 
     public String getProfileIdentifierText() {

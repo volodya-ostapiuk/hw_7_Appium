@@ -38,7 +38,6 @@ public class GmailMessageBO {
 
     public void goToSendLettersFolderAndClickOnLastSentMessage() {
         logger.info("Going to sent messages folder.");
-        homePage.clickOnNavigationBarButton();
         homePage.clickSentLettersFolder();
         logger.info("Clicking on last sent message.");
         homePage.clickLastSentMessage();

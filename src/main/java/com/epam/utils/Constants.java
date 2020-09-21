@@ -21,6 +21,7 @@ public interface Constants {
     String TEST_USER_PASSWORD = TEST_USER.getPassword();
 
     MessageEntity TEST_MESSAGE = MessageEntityProvider.getMessageEntity();
+    String IN_SENT_TEXT = "in:sent";
 
     String WRONG_LOGIN = "Wrong login.";
     String WRONG_SENT_MESSAGE = "Fields of last letter from sent folder doesn't match last sent message.";
