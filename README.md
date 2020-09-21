@@ -1,4 +1,11 @@
-##Functional task:
+## Run project
+   Pull project to your computer and 
+       ```
+       mvn test
+       ```
+    test to build project
+
+## Functional task:
   
   - Navigate to gmail login page
   - Log in with test email account
