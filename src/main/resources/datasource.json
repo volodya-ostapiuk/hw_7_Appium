@@ -1,0 +1,13 @@
+{
+  "message": {
+    "topic": "Selenium test message",
+    "receiver": "ostap.volodya@gmail.com",
+    "letterText": "Generated number = "
+  },
+  "users": [
+    {
+      "email": "test.automv",
+      "password": "testaut50"
+    }
+  ]
+}
