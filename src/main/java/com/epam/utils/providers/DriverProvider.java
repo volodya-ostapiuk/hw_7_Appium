@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class DriverProvider implements Constants {
-    private static AndroidDriver<MobileElement> driver;
+    private static ThreadLocal<AndroidDriver<MobileElement>> driverPool = new ThreadLocal<>();
     private static URL url;
 
     static {
@@ -22,22 +22,23 @@ public class DriverProvider implements Constants {
     }
 
     private DriverProvider() {
-        driver = new AndroidDriver<>(url, CapabilitiesProvider.getInstance());
-        driver.manage()
+        driverPool.set(new AndroidDriver<>(url, CapabilitiesProvider.getInstance()));
+        driverPool.get().manage()
                 .timeouts()
                 .implicitlyWait(TIME_WAIT, TimeUnit.SECONDS);
     }
 
-    public static AndroidDriver<MobileElement> getInstance() {
-        if (Objects.isNull(driver)) {
+    public static synchronized AndroidDriver<MobileElement> getInstance() {
+        if (Objects.isNull(driverPool.get())) {
             new DriverProvider();
         }
-        return driver;
+        return driverPool.get();
     }
 
     public static void quit() {
-        if (Objects.nonNull(driver)) {
-            driver.quit();
+        if (Objects.nonNull(driverPool.get())) {
+            driverPool.get().quit();
+            driverPool.set(null);
         }
     }
 }

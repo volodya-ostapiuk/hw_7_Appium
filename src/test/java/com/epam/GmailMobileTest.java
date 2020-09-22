@@ -5,13 +5,14 @@ import com.epam.business.GmailMessageBO;
 import com.epam.listeners.TestListener;
 import com.epam.model.MessageEntity;
 import com.epam.utils.Constants;
+import com.epam.utils.providers.DataObjectsProvider;
 import com.epam.utils.providers.DriverProvider;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.util.Iterator;
+import java.util.stream.Stream;
 
 @Listeners({TestListener.class})
 public class GmailMobileTest implements Constants {
@@ -25,16 +26,21 @@ public class GmailMobileTest implements Constants {
         messageBO = new GmailMessageBO();
     }
 
+    @DataProvider(parallel = true)
+    public Iterator<Object[]> usersLoginAndPassword() {
+        return Stream.of(DataObjectsProvider.getUsers()).iterator();
+    }
+
     /**
      * Enters email, enters password. Waits until new page will be opened and element will be clickable on it.
      * Checks does page contains email. Creates new letter. Sends it. Checks if last sent letter contains
      * needed email, text and topic.
      */
-    @Test
-    @Description("Login, create draft message, verify draft fields are saved correctly and send draft message.")
-    private void verifyDraftFieldsAreSavedCorrectly() {
-        logInBO.logIn(TEST_USER_EMAIL, TEST_USER_PASSWORD);
-        Assert.assertTrue(logInBO.isLoggedIn(TEST_USER_EMAIL), WRONG_LOGIN);
+    @Test(dataProvider = "usersLoginAndPassword", description = "Send message scenario.")
+    @Description("Login, create message, send it, verify message is sent correctly.")
+    private void verifyDraftFieldsAreSavedCorrectly(String userEmail, String userPassword) {
+        logInBO.logIn(userEmail, userPassword);
+        Assert.assertTrue(logInBO.isLoggedIn(userEmail), WRONG_LOGIN);
 
         messageBO.createAndSendMessage(TEST_MESSAGE);
         messageBO.goToSendLettersFolderAndClickOnLastSentMessage();

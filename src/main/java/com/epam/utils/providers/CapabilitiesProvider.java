@@ -7,20 +7,21 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Objects;
 
 public class CapabilitiesProvider {
-    private static DesiredCapabilities capabilities;
+    private static ThreadLocal<DesiredCapabilities> capabilitiesPool = new ThreadLocal<>();
 
     private CapabilitiesProvider() {
-        capabilities = new DesiredCapabilities();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, ConfigProperties.getPlatformName());
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, ConfigProperties.getDeviceName());
         capabilities.setCapability("appPackage", ConfigProperties.getAppPackage());
         capabilities.setCapability("appActivity", ConfigProperties.getAppActivity());
+        capabilitiesPool.set(capabilities);
     }
 
     public static DesiredCapabilities getInstance() {
-        if (Objects.isNull(capabilities)) {
+        if (Objects.isNull(capabilitiesPool.get())) {
             new CapabilitiesProvider();
         }
-        return capabilities;
+        return capabilitiesPool.get();
     }
 }
