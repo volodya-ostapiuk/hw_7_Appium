@@ -21,8 +21,13 @@ public interface Constants {
     String TEST_USER_PASSWORD = TEST_USER.getPassword();
 
     MessageEntity TEST_MESSAGE = MessageEntityProvider.getMessageEntity();
+    String TEST_RECEIVER = TEST_MESSAGE.getReceiver();
+    String TEST_TOPIC = TEST_MESSAGE.getTopic();
+    String TEST_LETTER_TEXT = TEST_MESSAGE.getLetterText();
     String IN_SENT_TEXT = "in:sent";
 
     String WRONG_LOGIN = "Wrong login.";
-    String WRONG_SENT_MESSAGE = "Fields of last letter from sent folder doesn't match last sent message.";
+    String WRONG_SENT_TOPIC = "Field topic of last letter from sent folder doesn't match last sent message.";
+    String WRONG_SENT_RECEIVER = "Field receiver of last letter from sent folder doesn't match last sent message.";
+    String WRONG_SENT_TEXT = "Field letter text of last letter from sent folder doesn't match last sent message.";
 }

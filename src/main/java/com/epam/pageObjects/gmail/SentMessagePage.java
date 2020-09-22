@@ -9,7 +9,7 @@ public class SentMessagePage extends BasePage {
     @AndroidFindBy(id = "subject_and_folder_view")
     private MobileElement messageSubjectText;
 
-    @AndroidFindBy(id = "recipient_summary_container")
+    @AndroidFindBy(id = "recipient_summary")
     private MobileElement messageReceiverText;
 
     @AndroidFindBy(xpath = "//android.view.View[2]/*")

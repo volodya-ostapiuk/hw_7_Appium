@@ -16,7 +16,7 @@ public class GmailMessageFormPage extends BasePage {
     @AndroidFindBy(id = "subject")
     private MobileElement messageSubjectField;
 
-    @AndroidFindBy(xpath = "//android.webkit.WebView/android.view.View")
+    @AndroidFindBy(xpath = "(//android.widget.EditText)[2]")
     private MobileElement messageContentField;
 
     @AndroidFindBy(id = "send")

@@ -4,6 +4,7 @@ import com.epam.model.MessageEntity;
 import com.epam.pageObjects.gmail.GmailHomePage;
 import com.epam.pageObjects.gmail.GmailMessageFormPage;
 import com.epam.pageObjects.gmail.SentMessagePage;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +20,8 @@ public class GmailMessageBO {
         sentMessagePage = new SentMessagePage();
     }
 
+    @Step("Create message with fields - receiver: {0.receiver}, " +
+            "topic: {0.topic}, text: {0.letterText} and sent it, in {method} step")
     public void createAndSendMessage(MessageEntity message) {
         logger.info("Creating new message.");
         homePage.clickComposeButton();
@@ -36,6 +39,7 @@ public class GmailMessageBO {
         messageFormPage.enterLetterText(message.getLetterText());
     }
 
+    @Step("Go to sent letters folder and click on last sent message in {method} step")
     public void goToSendLettersFolderAndClickOnLastSentMessage() {
         logger.info("Going to sent messages folder.");
         homePage.clickSentLettersFolder();
@@ -43,6 +47,7 @@ public class GmailMessageBO {
         homePage.clickLastSentMessage();
     }
 
+    @Step("Get filled fields from last sent message in {method} step")
     public MessageEntity getSentMessageEntity() {
         logger.info("Getting filled fields from sent message.");
         String filledToField = sentMessagePage.getFilledToFieldText();
